@@ -96,6 +96,10 @@ public class SimplePathFollower {
         return this;
     }
 
+    public Waypoint getWaypoint(int index){
+        return path.get(index);
+    }
+
     /** Prepares the follower to execute the loaded path. */
     public void start() {
         currentTargetIdx = 0;

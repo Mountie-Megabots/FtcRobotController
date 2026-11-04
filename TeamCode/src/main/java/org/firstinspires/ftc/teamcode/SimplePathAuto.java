@@ -15,10 +15,10 @@ public class SimplePathAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
         // 1. Initialize Motors
-        leftFront  = hardwareMap.get(DcMotor.class, "leftFront");
-        rightFront = hardwareMap.get(DcMotor.class, "rightFront");
-        leftBack   = hardwareMap.get(DcMotor.class, "leftBack");
-        rightBack  = hardwareMap.get(DcMotor.class, "rightBack");
+        leftFront  = hardwareMap.get(DcMotor.class, "front-left");
+        rightFront = hardwareMap.get(DcMotor.class, "front-right");
+        leftBack   = hardwareMap.get(DcMotor.class, "back-left");
+        rightBack  = hardwareMap.get(DcMotor.class, "back-right");
 
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         rightBack.setDirection(DcMotor.Direction.REVERSE);
@@ -31,11 +31,8 @@ public class SimplePathAuto extends LinearOpMode {
         pathFollower = new SimplePathFollower();
         pathFollower
                 // Waypoint 1: Drive forward to (0, 24 inches) facing 0 deg at 80% speed (pass-through)
-                .addWaypoint(0, 24, 0, 0.8)
-                // Waypoint 2: Curve to (24, 24 inches) while turning to 90 deg (pass-through)
-                .addWaypoint(24, 24, 90, 0.8)
-                // Waypoint 3: Drive to (48, 0 inches) facing 180 deg and stop accurately (stopAtEnd = true)
-                .addWaypoint(48, 0, 180, 0.6, true);
+                .addWaypoint(0, 24, 0, 0.8);
+
 
         telemetry.addData("Status", "Initialized. Ready for Start.");
         telemetry.update();
@@ -60,6 +57,8 @@ public class SimplePathAuto extends LinearOpMode {
 
             // Telemetry feedback
             telemetry.addData("Target Waypoint", pathFollower.getCurrentWaypointIndex());
+            telemetry.addData("Target Waypoint-X", pathFollower.getWaypoint(pathFollower.getCurrentWaypointIndex()).x);
+            telemetry.addData("Target Waypoint-y", pathFollower.getWaypoint(pathFollower.getCurrentWaypointIndex()).y);
             telemetry.addData("Robot X (in)", currentPose.getX(org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit.INCH));
             telemetry.addData("Robot Y (in)", currentPose.getY(org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit.INCH));
             telemetry.addData("Robot Heading (deg)", currentPose.getHeading(org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES));
